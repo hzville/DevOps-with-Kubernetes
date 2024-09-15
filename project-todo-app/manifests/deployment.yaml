@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-todo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: project-todo-app
+  template:
+    metadata:
+      labels:
+        app: project-todo-app
+    spec:
+      containers:
+        - name: project-todo-app
+          image: hzville/devops-with-kubernetes:project-todo-app-server

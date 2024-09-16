@@ -15,6 +15,3 @@ spec:
       containers:
         - name: project-todo-app
           image: hzville/devops-with-kubernetes:project-todo-app-server-1.05
-          env:
-            - name: PORT
-              value: "3001"

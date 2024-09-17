@@ -1,0 +1,12 @@
+{
+  "name": "file-writer-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "fileWriter.js",
+  "scripts": {
+    "start": "node fileWriter.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

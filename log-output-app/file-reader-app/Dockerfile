@@ -6,6 +6,6 @@ COPY package-lock.json package.json ./
 
 RUN npm ci
 
-COPY logOutputApp.js server.js ./
+COPY server.js fileReader.js ./
 
 CMD ["npm", "start"]

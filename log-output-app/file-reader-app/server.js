@@ -1,10 +1,11 @@
 const express = require('express')
 const app = express()
-const {getTimestampAndRandomString} = require('./fileReader')
+const {getTimestampAndRandomString, getPingPongData} = require('./fileReader')
 
 app.get('/', (req, res) => {
-  const result = getTimestampAndRandomString()
-  res.send(result)
+  const timeStampData = getTimestampAndRandomString()
+  const pingPongData = getPingPongData()
+  res.send(`${timeStampData} \n Ping / Pongs: ${pingPongData}`)
 })
 
 const PORT = 3003 || process.env.PORT

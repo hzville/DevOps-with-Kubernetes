@@ -3,18 +3,19 @@ const { v4: uuidv4 } = require('uuid')
 const path = require('path')
 
 const logPath =  path.join('/', 'usr', 'src', 'app', 'files')
-const logFileName = logPath+'/logs.txt'
+const timeStampFile = logPath+'/logs.txt'
+const pingPongFile = logPath+'/pingponglogs.txt'
 
 const randomString = uuidv4()
 
-const readFromFile = () => {
-  const data = readFileSync(logFileName, 'utf8')
-  return data  
-}
-
 const getTimestampAndRandomString = () => {
-  const timeStamp = readFromFile()
-  return timeStamp + " : " + randomString
+  const timeStampData = readFileSync(timeStampFile, 'utf8')
+  return timeStampData + " : " + randomString
 } 
 
-module.exports = {getTimestampAndRandomString}
+const getPingPongData = () => {
+  const pingPongData = readFileSync(pingPongFile, 'utf8')
+  return pingPongData
+}
+
+module.exports = {getTimestampAndRandomString, getPingPongData}

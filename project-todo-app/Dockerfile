@@ -8,6 +8,6 @@ COPY package-lock.json package.json ./
 
 RUN npm ci
 
-COPY server.js .
+COPY server.js getImage.js front-page.html ./
 
 CMD ["npm", "start"]

@@ -1,6 +1,7 @@
 const { readFileSync } = require('node:fs')
 const { v4: uuidv4 } = require('uuid')
 const path = require('path')
+const axios = require('axios')
 
 const logPath =  path.join('/', 'usr', 'src', 'app', 'files')
 const timeStampFile = logPath+'/logs.txt'
@@ -13,9 +14,9 @@ const getTimestampAndRandomString = () => {
   return timeStampData + " : " + randomString
 } 
 
-const getPingPongData = () => {
-  const pingPongData = readFileSync(pingPongFile, 'utf8')
-  return pingPongData
+const getPingPongData = async () => {
+  const pingPongData = await axios.get('http://ping-pong-app:4444/api/get-number')
+  return pingPongData.data
 }
 
 module.exports = {getTimestampAndRandomString, getPingPongData}

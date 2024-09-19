@@ -23,6 +23,10 @@ app.get('/pingpong', (req, res) => {
   res.send(`pong ${numberOfRequests}`)
 })
 
+app.get('/api/get-number', (req, res) => {
+  res.json({ pingpongs: numberOfRequests })
+})
+
 const PORT = process.env.PORT || 3002
 app.listen(PORT, () => {
   createLogFile()

@@ -12,14 +12,7 @@ spec:
       labels:
         app: ping-pong-app
     spec:
-      volumes:
-        - name: app-logs
-          persistentVolumeClaim:
-            claimName: apps-claim
       containers:
         - name: ping-pong-app
           image: hzville/devops-with-kubernetes:ping-pong-app
           imagePullPolicy: Always
-          volumeMounts:
-          - name: app-logs
-            mountPath: /usr/src/app/files

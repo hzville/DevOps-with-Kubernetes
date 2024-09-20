@@ -17,8 +17,14 @@ spec:
           persistentVolumeClaim:
             claimName: project-todo-app-storage
       containers:
-        - name: project-todo-app
+        - name: project-todo-app-frontend
           image: hzville/devops-with-kubernetes:project-todo-app
+          imagePullPolicy: Always
+          volumeMounts:
+          - name: project-todo-app-storage
+            mountPath: /usr/src/app/files
+        - name: project-todo-app-backend
+          image: hzville/devops-with-kubernetes:project-todo-app-backend
           imagePullPolicy: Always
           volumeMounts:
           - name: project-todo-app-storage

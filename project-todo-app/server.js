@@ -1,11 +1,13 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 const { createImageFolder, checkIfImageExists } = require('./getImage')
+app.use(cors())
 app.use(express.static(__dirname, {
   extensions:["jpg"]
 }))
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   checkIfImageExists()
   res.sendFile('front-page.html', {root: __dirname})
 })

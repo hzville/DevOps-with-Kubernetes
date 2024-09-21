@@ -1,11 +1,18 @@
 const express = require('express')
 const app = express()
-const {getTimestampAndRandomString, getPingPongData} = require('./fileReader')
+const {getTimestampAndRandomString, readInformationFile, getPingPongData} = require('./fileReader')
+
+const envMessage = process.env.MESSAGE  || 'No env variable set'
 
 app.get('/', async (req, res) => {
   const timeStampData = getTimestampAndRandomString()
   const pingPongData =  await getPingPongData()
-  res.send(`${timeStampData} \n Ping / Pongs: ${pingPongData.pingpongs}`)
+  const informationData = await readInformationFile()
+  res.send(
+    `file content: ${informationData} <br/> 
+    env variable: MESSAGE=${envMessage} <br/> 
+    ${timeStampData} <br/> 
+    Ping / Pongs: ${pingPongData.pingpongs}`)
 })
 
 const PORT = 3003 || process.env.PORT

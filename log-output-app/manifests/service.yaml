@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: file-reader-app
+  namespace: log-output-app-namespace
 spec:
   type: ClusterIP
   selector:

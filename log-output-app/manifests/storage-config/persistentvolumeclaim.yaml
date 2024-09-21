@@ -2,6 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: apps-claim 
+  namespace: log-output-app-namespace
 spec:
   storageClassName: app-presistent-volume
   accessModes:

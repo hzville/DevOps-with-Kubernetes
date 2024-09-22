@@ -1,34 +1,23 @@
 const express = require('express')
 const app = express()
-const path = require('path')
-const { writeFile, mkdirSync } = require('node:fs')
-const logPath =  path.join('/', 'usr', 'src', 'app', 'files')
-const logFileName = logPath+'/pingponglogs.txt'
+const { initalizeTable, addNewPing, getPingPongs } = require('./postgresQuerys.js')
 
-let numberOfRequests = 0
-
-const createLogFile = () => {
-  mkdirSync(logPath, { recursive: true }, (error) => {
-    console.log('Error writing file ', error)
-  })
-}
-
-app.get('/pingpong', (req, res) => {
-  numberOfRequests++
-  writeFile(logFileName, numberOfRequests.toString(), err => {
-    if (err) {
-      console.log('error was ',err)
-    }
-  })
-  res.send(`pong ${numberOfRequests}`)
+app.get('/pingpong', async (req, res) => {
+  await addNewPing()
+  result = await getPingPongs()
+  res.send(`pong ${result.count}`)
 })
 
-app.get('/api/get-number', (req, res) => {
-  res.json({ pingpongs: numberOfRequests })
+app.get('/api/get-number', async (req, res) => {
+  result = await getPingPongs()
+  res.json({ pingpongs: result.count })
 })
 
 const PORT = process.env.PORT || 3002
-app.listen(PORT, () => {
-  createLogFile()
+app.listen(PORT, async () => {
   console.log(`ping-pong app started on port ${PORT}`)
+  setTimeout(() => {
+    console.log('starting postgres connection')
+    initalizeTable()
+  },5000)
 })

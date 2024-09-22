@@ -6,6 +6,6 @@ COPY package-lock.json package.json ./
 
 RUN npm ci
 
-COPY server.js ./
+COPY server.js postgresQuerys.js ./
 
 CMD ["npm", "start"]

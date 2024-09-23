@@ -8,6 +8,6 @@ COPY package-lock.json package.json ./
 
 RUN npm ci
 
-COPY server.js todos.json ./
+COPY /src ./
 
 CMD ["npm", "start"]

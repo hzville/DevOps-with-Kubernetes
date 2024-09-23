@@ -30,3 +30,17 @@ spec:
           volumeMounts:
           - name: project-todo-app-storage
             mountPath: /usr/src/app/files
+          env:
+          - name: POSTGRES_HOST
+            value: "postgres-service"
+          - name: POSTGRES_PORT
+            value: "5432"
+          - name: POSTGRES_USER
+            value: "user1"
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key:  POSTGRES_PASSWORD
+          - name: POSTGRES_DB
+            value: "new_db"

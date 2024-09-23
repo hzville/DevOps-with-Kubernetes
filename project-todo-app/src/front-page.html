@@ -8,11 +8,11 @@
 <script>
   document.addEventListener("DOMContentLoaded", async () => {
     const result = await fetch('http://localhost:8081/todos')
-    const todoListData = await result.json()
+    const listOfTodos = await result.json()
     const todoList = document.getElementById('todo-list')
-    todoListData.todos.forEach(todo => {
+    listOfTodos.forEach(todo => {
           const li = document.createElement('li')
-          li.textContent = todo.content
+          li.textContent = todo.todo_content
           todoList.appendChild(li)
         })
   })

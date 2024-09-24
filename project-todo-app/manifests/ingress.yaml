@@ -14,7 +14,7 @@ spec:
             name: project-todo-app-frontend-service
             port:
               number: 2345
-      - path: /todos
+      - path: /api/todos
         pathType: Prefix
         backend:
           service:

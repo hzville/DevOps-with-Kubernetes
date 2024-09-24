@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cronjob-send-new-todo
+  namespace: project-todo-app-namespace
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cronjob
+            image: hzville/devops-with-kubernetes:project-todo-app-cronjob
+            imagePullPolicy: Always
+          restartPolicy: Never

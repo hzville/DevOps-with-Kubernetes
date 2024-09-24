@@ -1,0 +1,11 @@
+FROM alpine:latest
+
+RUN apk --no-cache add curl
+
+WORKDIR /app
+
+COPY ./src/cronjob-add-new-todo.sh ./
+
+RUN chmod +x /app/cronjob-add-new-todo.sh
+
+CMD ["/app/cronjob-add-new-todo.sh"]

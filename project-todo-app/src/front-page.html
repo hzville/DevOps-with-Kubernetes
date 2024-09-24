@@ -7,7 +7,7 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", async () => {
-    const result = await fetch('http://localhost:8081/todos')
+    const result = await fetch('http://localhost:8081/api/todos')
     const listOfTodos = await result.json()
     const todoList = document.getElementById('todo-list')
     listOfTodos.forEach(todo => {
@@ -20,7 +20,7 @@
 
 <img src="files/image.jpg" alt="image from container">
 
-<form action="http://localhost:8081/todos" method="POST">
+<form action="http://localhost:8081/api/todos" method="POST">
   <input type="text" name="content" maxlength="140">
   <input type="submit" value="create TODO">
 </form>

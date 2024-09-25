@@ -12,7 +12,17 @@ app.get('/api/todos', async (req, res) => {
 })
 
 app.post('/api/todos', async (req, res) => {
-  await addNewTodo(req.body.content)
+  const content = req.body.content
+  if (content.length > 140){
+    console.log('ERROR : Todo rejected, todos content length exceeded 140 characters')
+  } else {
+    try {
+      console.info('INFO : Adding new todo with content:', content)
+      await addNewTodo(req.body.content)
+    } catch (error) {
+      console.error('ERROR : Error adding new todo: ', error)
+    }
+  }
   res.redirect('back')
 })
 

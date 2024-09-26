@@ -24,6 +24,12 @@ spec:
           volumeMounts:
           - name: project-todo-app-storage
             mountPath: /usr/src/app/files
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 3001
+            initialDelaySeconds: 15
+            periodSeconds: 10
         - name: project-todo-app-backend
           image: hzville/devops-with-kubernetes:project-todo-app-backend
           imagePullPolicy: Always
@@ -44,3 +50,9 @@ spec:
                 key:  POSTGRES_PASSWORD
           - name: POSTGRES_DB
             value: "new_db"
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 3004
+            initialDelaySeconds: 10
+            periodSeconds: 10

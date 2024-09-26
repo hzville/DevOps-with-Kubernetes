@@ -12,6 +12,15 @@ app.get('/', async (req, res) => {
   res.sendFile('front-page.html', {root: __dirname})
 })
 
+app.get('/healthz', async (req, res) => {
+  const result = await fetch('http://localhost:3004/api/todos')
+  if (result.status == 200 ) {
+        res.status(200).send('OK')
+      } else {
+        res.status(503).send('Service unavailable')
+      }
+})
+
 const PORT = process.env.PORT  || 3001
 app.listen(PORT, () => {
   console.log(`Server started in port ${PORT}`)

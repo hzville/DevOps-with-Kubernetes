@@ -65,4 +65,15 @@ const getTodos = async () => {
   }
 }
 
-module.exports = { initalizeTable, addNewTodo, getTodos }
+const isDatabaseReady = async () => {
+  try {
+    const client = await pool.connect()
+    client.release()
+    return true
+  } catch (error) {
+    console.log('Error connecting to database ', error)
+    return false
+  }
+}
+
+module.exports = { initalizeTable, addNewTodo, getTodos, isDatabaseReady }

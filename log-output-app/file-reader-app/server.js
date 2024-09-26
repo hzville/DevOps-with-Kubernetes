@@ -15,6 +15,14 @@ app.get('/', async (req, res) => {
     Ping / Pongs: ${pingPongData.pingpongs}`)
 })
 
+app.get('/healthz', async (req, res) => {
+  if (await getPingPongData() != null) {
+    res.status(200).send('OK')
+  } else {
+    res.status(503).send('Database unavailable')
+  }
+})
+
 const PORT = 3003 || process.env.PORT
 app.listen(PORT, () => {
   console.log(`File reader app started at port ${PORT}`)

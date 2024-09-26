@@ -44,6 +44,12 @@ spec:
               configMapKeyRef:
                 name: log-output-app-configmap
                 key: MESSAGE
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 3003
+            initialDelaySeconds: 10
+            periodSeconds: 10
                 
 ---
 
@@ -80,3 +86,9 @@ spec:
                 key:  POSTGRES_PASSWORD
           - name: POSTGRES_DB
             value: "new_db"
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 3002
+            initialDelaySeconds: 5
+            periodSeconds: 10

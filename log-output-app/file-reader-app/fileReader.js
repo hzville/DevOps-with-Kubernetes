@@ -21,8 +21,13 @@ const readInformationFile = () => {
 }
 
 const getPingPongData = async () => {
-  const pingPongData = await axios.get('http://ping-pong-app:4444/api/get-number')
-  return pingPongData.data
+  try {
+    const pingPongData = await axios.get('http://ping-pong-app:4444/api/get-number')
+    return pingPongData.data
+  } catch (error) {
+    console.log('Error getting pingpong data', error)
+    return null
+  }
 }
 
 module.exports = {getTimestampAndRandomString, readInformationFile, getPingPongData}

@@ -19,6 +19,8 @@ spec:
           duration: 30s
   template:
     metadata:
+      annotations:
+        linkerd.io/inject: enabled
       labels:
         app: project-todo-app
     spec:

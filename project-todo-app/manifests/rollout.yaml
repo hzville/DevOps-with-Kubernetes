@@ -1,13 +1,22 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: project-todo-app
   namespace: project-todo-app-namespace
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: project-todo-app
+  strategy:
+    canary:
+      steps:
+      - setWeight: 50
+      - analysis:
+          templates:
+          - templateName: cpu-usage-analysis
+      - pause:
+          duration: 30s
   template:
     metadata:
       labels:

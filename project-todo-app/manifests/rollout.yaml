@@ -4,14 +4,14 @@ metadata:
   name: project-todo-app
   namespace: project-todo-app-namespace
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: project-todo-app
   strategy:
     canary:
       steps:
-      - setWeight: 50
+      - setWeight: 100
       - analysis:
           templates:
           - templateName: cpu-usage-analysis

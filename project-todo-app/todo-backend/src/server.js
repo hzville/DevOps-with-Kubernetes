@@ -3,7 +3,7 @@ const app = express()
 const cors = require('cors')
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
-const { initalizeTable, addNewTodo, getTodos, isDatabaseReady } = require('./postgresQuery')
+const { initalizeTable, addNewTodo, getTodos, isDatabaseReady, updateTodoStatusDoneById } = require('./postgresQuery')
 
 
 app.get('/api/todos', async (req, res) => {
@@ -29,6 +29,18 @@ app.post('/api/todos', async (req, res) => {
     }
   }
   res.redirect('back')
+})
+
+app.put('/api/todos/:id', async (req, res) => {
+  const { id } = req.params
+
+  try {
+    await updateTodoStatusDoneById(id)
+    res.status(200).send('OK')
+  } catch (error) {
+    console.log('failed to update todo ', error)
+    res.status(500).send('Failed updating todo status')
+  }
 })
 
 app.get('/healthz', async (req, res) => {

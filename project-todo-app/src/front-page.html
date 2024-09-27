@@ -10,11 +10,48 @@
     const result = await fetch('http://localhost:8081/api/todos')
     const listOfTodos = await result.json()
     const todoList = document.getElementById('todo-list')
+    listOfTodos.sort((a, b) => a.id - b.id)
     listOfTodos.forEach(todo => {
-          const li = document.createElement('li')
-          li.textContent = todo.todo_content
-          todoList.appendChild(li)
+      const li = document.createElement('li')
+
+      const idDiv = document.createElement('div')
+      idDiv.textContent = `ID: ${todo.id}`
+
+      const contentDiv = document.createElement('div')
+      contentDiv.textContent = todo.todo_content
+
+      const statusDiv = document.createElement('div')
+      statusDiv.textContent = `Status: ${todo.todo_status}`
+
+      const doneButton = document.createElement('button')
+      if (todo.todo_status == 'done') {
+        doneButton.textContent = "Done!"
+        doneButton.disabled = true
+      } else {
+        doneButton.textContent = "Mark done"
+      }
+      doneButton.addEventListener('click', async () => {
+        const response = await fetch(`http://localhost:8081/api/todos/${todo.id}`, {
+          method: 'PUT'
         })
+        if (response.ok) {
+          statusDiv.textContent = `Status: done`
+          doneButton.disabled = true
+          doneButton.textContent = "Done!"
+        } else {
+          console.error('Failed to mark todo as done')
+        }
+      })
+
+      li.appendChild(idDiv)
+      li.appendChild(contentDiv)
+      li.appendChild(statusDiv)
+      li.appendChild(doneButton)
+      todoList.appendChild(li)
+      
+      const lineBreak = document.createElement('br')
+      todoList.appendChild(lineBreak)
+    })
   })
 </script>
 

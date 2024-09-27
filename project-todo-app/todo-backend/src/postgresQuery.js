@@ -10,13 +10,13 @@ const pool = new Pool({
 
 const initalizeTable = async () => {
   const client = await pool.connect()
-  console.log('Succesfully connected to Postgres database')
   try {
     await client.query('BEGIN')
     const query = `
       CREATE TABLE IF NOT EXISTS ${table} (
         id SERIAL PRIMARY KEY,
         todo_content VARCHAR(255) NOT NULL,
+        todo_status VARCHAR(255) DEFAULT todo,
         event_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
       );
     `
@@ -52,10 +52,25 @@ const getTodos = async () => {
   const client = await pool.connect()
   try {
     await client.query('BEGIN')
-    const result = await client.query(`SELECT todo_content FROM ${table};`)
+    const result = await client.query(`SELECT id, todo_content, todo_status FROM ${table};`)
     await client.query('COMMIT')
     return result.rows
   
+  } catch (err) {
+    await client.query('ROLLBACK')
+    console.error('Transaction error:', err.stack)
+  
+  } finally {
+    client.release()
+  }
+}
+
+const updateTodoStatusDoneById = async (id) => {
+  const client = await pool.connect()
+  try {
+    await client.query('BEGIN')
+    await client.query(`UPDATE ${table} SET todo_status ='done' WHERE id = '${id}';`)
+    await client.query('COMMIT')  
   } catch (err) {
     await client.query('ROLLBACK')
     console.error('Transaction error:', err.stack)
@@ -76,4 +91,4 @@ const isDatabaseReady = async () => {
   }
 }
 
-module.exports = { initalizeTable, addNewTodo, getTodos, isDatabaseReady }
+module.exports = { initalizeTable, addNewTodo, getTodos, isDatabaseReady, updateTodoStatusDoneById }

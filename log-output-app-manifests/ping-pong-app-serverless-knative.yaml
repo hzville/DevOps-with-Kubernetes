@@ -1,0 +1,26 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: ping-pong-app
+spec:
+  template:
+    spec:
+      containers:
+      - image: hzville/devops-with-kubernetes:ping-pong-app
+        imagePullPolicy: Always
+        env:
+        - name: POSTGRES_HOST
+          value: "postgres-service"
+        - name: POSTGRES_PORT
+          value: "5432"
+        - name: POSTGRES_USER
+          value: "user1"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key:  POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          value: "new_db"
+        - name: APP_PORT
+          value: "8080"

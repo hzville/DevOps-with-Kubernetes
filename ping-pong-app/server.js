@@ -30,7 +30,7 @@ app.get('/healthz', async (req, res) => {
   }
 })
 
-const PORT = process.env.PORT || 3002
+const PORT = process.env.APP_PORT ||3002
 app.listen(PORT, async () => {
   console.log(`ping-pong app started on port ${PORT}`)
 })
